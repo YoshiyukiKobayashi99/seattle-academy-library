@@ -74,7 +74,7 @@
                 <button type="submit" id="add-btn" class="btn_addBook">登録</button>
             </div>
         </form>
-        </div>
+        <div> </div>
     </main>
 </body>
 </html>

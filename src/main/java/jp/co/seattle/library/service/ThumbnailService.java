@@ -51,7 +51,8 @@ public class ThumbnailService {
 
         // S3にサムネイル画像をアップロード
         InputStream inputStream = file.getInputStream();
-        ObjectWriteResponse owr = minioClient.putObject(
+        @SuppressWarnings("unused")
+		ObjectWriteResponse owr = minioClient.putObject(
                 PutObjectArgs.builder()
                         .bucket(minioConfig.getMinioInfo("s3.bucket-name"))
                         .object(fileName)

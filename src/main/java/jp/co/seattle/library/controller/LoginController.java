@@ -21,7 +21,8 @@ public class LoginController {
 
     @Autowired
     private BooksService booksService;
-    @Autowired
+    @SuppressWarnings("unused")
+	@Autowired
     private UsersService usersService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)

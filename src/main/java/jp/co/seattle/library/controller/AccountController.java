@@ -55,14 +55,49 @@ public class AccountController {
         // パラメータで受け取った書籍情報をDtoに格納する。
         UserInfo userInfo = new UserInfo();
         userInfo.setEmail(email);
-
+        
+       	//userInfo.setPassword(password);
+    	//usersService.registUser(userInfo);
+        
+        //if (password.matches("^[\\w]+${0,7}")) {
+        //	return "createAccount";
+        //}
+    	
+    	//if (password.matches("^[\\w]+${8,50}")) {
+    	//	if ((password.equals(passwordForCheck))) {
+        //		userInfo.setPassword(password);
+          //  	usersService.registUser(userInfo);
+            //model.addAttribute("bookList", booksService.getBookList());
+            //return "home";
+        	//} else {
+        	//	return "createAccount";
+        	//} 
+        //} else {
+        //	return "createAccount";
+        //}
+    	
+    	if (password.matches("^[\\w]{8,}$")) {
+    		if (password.equals(passwordForCheck)) {
+    			userInfo.setPassword(password);
+            	usersService.registUser(userInfo);
+            	model.addAttribute("bookList", booksService.getBookList());
+            	return "login";
+    		} else {
+    			model.addAttribute("errorMessage", "パスワードが一致しません");
+    			return "createAccount";
+    		}
+    	} else  {
+    		model.addAttribute("errorMessage", "パスワードを半角英数字8文字以上で入力してください");
+    		return "createAccount";
+    	}
         // TODO バリデーションチェック、パスワード一致チェック実装
-
-        userInfo.setPassword(password);
-        usersService.registUser(userInfo);
-
-        model.addAttribute("bookList", booksService.getBookList());
-        return "home";
+        //if ((password.equals(passwordForCheck))) {
+        //	userInfo.setPassword(password);
+        //	usersService.registUser(userInfo);
+        //	model.addAttribute("bookList", booksService.getBookList());
+        //	return "home";
+        //} else {
+        //	return "createAccount";
+        //}
     }
-
 }
