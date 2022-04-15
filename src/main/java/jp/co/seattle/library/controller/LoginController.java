@@ -45,7 +45,7 @@ public class LoginController {
             Model model) {
 
         // TODO 下記のコメントアウトを外してサービスクラスを使用してください。
-        //        UserInfo selectedUserInfo = usersService.selectUserInfo(email, password);
+        //      UserInfo selectedUserInfo = usersService.selectUserInfo(email, password);
 
         // TODO パスワードとメールアドレスの組み合わせ存在チェック実装
 
