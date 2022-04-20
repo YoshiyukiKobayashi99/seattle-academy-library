@@ -30,7 +30,6 @@ public class BooksService {
      * @return 書籍リスト
      */
     public List<BookInfo> getBookList() {
-    	//*だと動作が重くなったりするのか？→そういうわけでもない。何を持ってきているかわかる。もしバグがあったときにわかりやすい。
         // TODO 取得したい情報を取得するようにSQLを修正
         List<BookInfo> getedBookList = jdbcTemplate.query(
         		//タイトル順に
