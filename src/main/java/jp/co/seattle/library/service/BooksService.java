@@ -55,7 +55,7 @@ public class BooksService {
 
         return bookDetailsInfo;
     }
-
+    
     /**
      * 書籍を登録する
      *
@@ -63,10 +63,13 @@ public class BooksService {
      */
     public void registBook(BookDetailsInfo bookInfo) {
 
-        String sql = "INSERT INTO books (title, author,publisher,thumbnail_name,thumbnail_url,reg_date,upd_date) VALUES ('"
+        String sql = "INSERT INTO books (title, author, publisher, thumbnail_name, thumbnail_url, publish_date, isbn, description, reg_date, upd_date) VALUES ('"
                 + bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
                 + bookInfo.getThumbnailName() + "','"
-                + bookInfo.getThumbnailUrl() + "',"
+                + bookInfo.getThumbnailUrl() + "','"
+                + bookInfo.getPublishDate() + "','"
+                + bookInfo.getIsbn() + "','"
+                + bookInfo.getDescription() + "',"
                 + "now(),"
                 + "now())";
 
