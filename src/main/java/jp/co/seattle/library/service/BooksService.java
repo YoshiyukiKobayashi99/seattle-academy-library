@@ -56,6 +56,15 @@ public class BooksService {
         return bookDetailsInfo;
     }
     
+    public BookDetailsInfo getBookInfo() {
+
+        String sql = "select * from books where id = (select max(id) from books);";
+
+        BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
+
+        return bookDetailsInfo;
+    }
+    
     /**
      * 書籍を登録する
      *

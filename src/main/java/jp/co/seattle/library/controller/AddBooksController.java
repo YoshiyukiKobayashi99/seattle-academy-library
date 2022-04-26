@@ -95,7 +95,7 @@ public class AddBooksController {
 			}
 		}
 
-		if ((title.isEmpty()) || (author.isEmpty()) || (publisher.isEmpty()) || (publishDate.isEmpty())) {
+		if (title.isEmpty() || author.isEmpty() || publisher.isEmpty() || publishDate.isEmpty()) {
 			errorMessage.add("必須項目を入力してください。<p><br>");
 		}
 
@@ -103,7 +103,7 @@ public class AddBooksController {
 			errorMessage.add("出版日は半角数字はYYYYMMDD形式で入力してください。<p><br>");
 		}
 
-		if ((!isbn.isEmpty()) && !((isbn.matches("^[0-9]{10}$"))) && (!(isbn.matches("^[0-9]{13}$")))) {
+		if (!isbn.isEmpty() && (!isbn.matches("^[0-9]{10}$")) && (!isbn.matches("^[0-9]{13}$"))) {
 			errorMessage.add("ISBNは10桁または13桁の半角数字が正しくありません。");
 		}
 
@@ -112,7 +112,7 @@ public class AddBooksController {
 
 			model.addAttribute("resultMessage", "登録完了");
 
-			model.addAttribute("bookDetailsInfo", bookInfo);
+			model.addAttribute("bookDetailsInfo", booksService.getBookInfo());
 
 			// TODO 登録した書籍の詳細情報を表示するように実装
 			// 詳細画面に遷移する
