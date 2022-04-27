@@ -55,23 +55,50 @@ public class BooksService {
 
         return bookDetailsInfo;
     }
+    
+    /**
+     * 
+     * 書籍IDに紐づく書籍詳細情報を引数なしで取得する
+     * 
+     * @param bookId 書籍ID
+     * @return 書籍情報
+     */
+    
+    public BookDetailsInfo getBookInfo() {
+
+        String sql = "select * from books where id = (select max(id) from books);";
+
+        BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
+
+        return bookDetailsInfo;
+    }
 
     /**
      * 書籍を登録する
      *
      * @param bookInfo 書籍情報
      */
+    
     public void registBook(BookDetailsInfo bookInfo) {
 
-        String sql = "INSERT INTO books (title, author,publisher,thumbnail_name,thumbnail_url,reg_date,upd_date) VALUES ('"
+        String sql = "INSERT INTO books (title, author, publisher, thumbnail_name, thumbnail_url, publish_date, isbn, description, reg_date, upd_date) VALUES ('"
                 + bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
                 + bookInfo.getThumbnailName() + "','"
-                + bookInfo.getThumbnailUrl() + "',"
+                + bookInfo.getThumbnailUrl() + "','"
+                + bookInfo.getPublishDate() + "','"
+                + bookInfo.getIsbn() + "','"
+                + bookInfo.getDescription() + "',"
                 + "now(),"
                 + "now())";
 
         jdbcTemplate.update(sql);
     }
+    
+    /**
+     * 書籍を削除する
+     * 
+     * @param bookId 書籍ID
+     */
     
     public void deleteBook(int bookId) {
     	
