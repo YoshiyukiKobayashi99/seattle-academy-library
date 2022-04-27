@@ -74,7 +74,7 @@ public class EditController {
 			@RequestParam("bookId") Integer bookId,
 
 			Model model) {
-		logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
+		logger.info("Welcome editUpdateBooks.java! The client locale is {}.", locale);
 
 		// パラメータで受け取った書籍情報をDtoに格納する。
 		BookDetailsInfo bookInfo = new BookDetailsInfo();
@@ -106,7 +106,7 @@ public class EditController {
 				// 異常終了時の処理
 				logger.error("サムネイルアップロードでエラー発生", e);
 				model.addAttribute("bookDetailsInfo", bookInfo);
-				return "addBook";
+				return "edit";
 			}
 		}
 
@@ -135,8 +135,8 @@ public class EditController {
 
 		} else {
 			model.addAttribute("errorMessage", errorMessage);
-			model.addAttribute("bookDetailsInfo", bookInfo);
-			return "addBook";
+			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+			return "edit";
 		}
 
 	}
