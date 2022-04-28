@@ -33,13 +33,9 @@
             <h1>書籍の編集</h1>
             <div class="content_body add_book_content">
                 <div>
+                    <span>書籍の画像</span> <span class="care care1">任意</span>
                     <div class="book_thumnail">
-                        <a href="${bookDetailsInfo.thumbnailUrl}" data-lightbox="image-1"> <c:if test="${bookDetailsInfo.thumbnailUrl == 'null'}">
-                                <img class="book_noimg" src="resources/img/noImg.png">
-                            </c:if> <c:if test="${bookDetailsInfo.thumbnailUrl != 'null'}">
-                                <img class="book_noimg" src="${bookDetailsInfo.thumbnailUrl}">
-                            </c:if> <input type="hidden" name="bookId" value="${bookDetailsInfo.bookId}">
-                        </a>
+                        <img class="book_noimg" src="resources/img/noImg.png">
                     </div>
                     <input type="file" accept="image/*" name="thumbnail" id="thumbnail">
                 </div>

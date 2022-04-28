@@ -135,7 +135,7 @@ public class EditController {
 
 		} else {
 			model.addAttribute("errorMessage", errorMessage);
-			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+			model.addAttribute("bookDetailsInfo", bookInfo);
 			return "edit";
 		}
 
