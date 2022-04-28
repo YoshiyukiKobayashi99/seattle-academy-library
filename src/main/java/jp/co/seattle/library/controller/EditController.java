@@ -110,7 +110,7 @@ public class EditController {
 			}
 		}
 
-		if ((title.isEmpty()) || (author.isEmpty()) || (publisher.isEmpty()) || (publishDate.isEmpty())) {
+		if (title.isEmpty() || author.isEmpty() || publisher.isEmpty() || publishDate.isEmpty()) {
 			errorMessage.add("必須項目を入力してください。<p><br>");
 		}
 
@@ -118,12 +118,12 @@ public class EditController {
 			errorMessage.add("出版日は半角数字はYYYYMMDD形式で入力してください。<p><br>");
 		}
 
-		if ((!isbn.isEmpty()) && !((isbn.matches("^[0-9]{10}$"))) && (!(isbn.matches("^[0-9]{13}$")))) {
+		if (!isbn.isEmpty() && (!isbn.matches("^[0-9]{10}$")) && !(isbn.matches("^[0-9]{13}$"))) {
 			errorMessage.add("ISBNは10桁または13桁の半角数字が正しくありません。");
 		}
 
 		if (errorMessage == null || errorMessage.size() == 0) {
-			booksService.updateBook(bookInfo, bookId);
+			booksService.updateBook(bookInfo);
 
 			model.addAttribute("resultMessage", "更新完了");
 

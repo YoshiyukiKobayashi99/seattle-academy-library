@@ -95,13 +95,12 @@ public class BooksService {
 	 * @param bookId   書籍ID
 	 */
 
-	public void updateBook(BookDetailsInfo bookInfo, int id) {
+	public void updateBook(BookDetailsInfo bookInfo) {
 
 		String sql = "UPDATE books SET (title, author, publisher, thumbnail_name, thumbnail_url, publish_date, isbn, description, upd_date) = ('"
 				+ bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
 				+ bookInfo.getThumbnailName() + "','" + bookInfo.getThumbnailUrl() + "','" + bookInfo.getPublishDate()
-				+ "','" + bookInfo.getIsbn() + "','" + bookInfo.getDescription() + "'," + "now())" + "WHERE id = " + id
-				+ "";
+				+ "','" + bookInfo.getIsbn() + "','" + bookInfo.getDescription() + "'," + "now())" + "WHERE id = " + bookInfo.getBookId();
 
 		jdbcTemplate.update(sql);
 	}
