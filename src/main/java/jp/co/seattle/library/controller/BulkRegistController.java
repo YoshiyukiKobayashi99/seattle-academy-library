@@ -75,7 +75,7 @@ public class BulkRegistController {
 
 				boolean dateCheck = !(bookInfo.getPublishDate().matches("^[0-9]{8}$"));
 
-				boolean isbnCheck = !bookInfo.getIsbn().isEmpty() && !bookInfo.getIsbn().matches("^[0-9]{10}$");
+				boolean isbnCheck = !bookInfo.getIsbn().isEmpty() && !bookInfo.getIsbn().matches("^[0-9]{10}$") && !bookInfo.getIsbn().matches("^[0-9]{13}$");
 
 				if (mustItems || dateCheck || isbnCheck) {
 					// エラーが起きた行数をエラーレコードに格納
