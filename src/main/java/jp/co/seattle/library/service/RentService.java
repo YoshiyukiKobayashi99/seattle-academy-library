@@ -28,7 +28,7 @@ public class RentService {
 	public void rentBook(int bookId) {
 
 		// JSPに渡すデータを設定する
-		String sql = "INSERT INTO rent (book_id, rent_date) VALUES (" + bookId + ",now())";
+		String sql = "INSERT INTO rent (book_id) VALUES (" + bookId + ")";
 
 		jdbcTemplate.update(sql);
 	}
