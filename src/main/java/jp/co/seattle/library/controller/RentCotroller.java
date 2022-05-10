@@ -21,7 +21,7 @@ import jp.co.seattle.library.service.RentService;
  */
 @Controller
 public class RentCotroller {
-	final static Logger logger = LoggerFactory.getLogger(BooksService.class);
+	final static Logger logger = LoggerFactory.getLogger(RentCotroller.class);
 
 	@Autowired
 	private RentService rentService;
