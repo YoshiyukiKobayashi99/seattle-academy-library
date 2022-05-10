@@ -21,7 +21,7 @@ import jp.co.seattle.library.service.UsersService;
  */
 @Controller //APIの入り口
 public class AccountController {
-    final static Logger logger = LoggerFactory.getLogger(LoginController.class);
+    final static Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     @Autowired
     private BooksService booksService;
