@@ -12,40 +12,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.co.seattle.library.dto.RentBookInfo;
 import jp.co.seattle.library.service.BooksService;
+import jp.co.seattle.library.service.RentService;
 
 /**
  * 削除コントローラー
  */
-@Controller //APIの入り口
+@Controller // APIの入り口
 public class DeleteBookController {
-    final static Logger logger = LoggerFactory.getLogger(DeleteBookController.class);
+	final static Logger logger = LoggerFactory.getLogger(DeleteBookController.class);
 
-    @Autowired
-    private BooksService booksService;
-    /**
-     * 対象書籍を削除する
-     *
-     * @param locale ロケール情報
-     * @param bookId 書籍ID
-     * @param model モデル情報
-     * @return 遷移先画面名
-     */
-    @Transactional
-    @RequestMapping(value = "/deleteBook", method = RequestMethod.POST)
-    public String deleteBook(
-            Locale locale,
-            @RequestParam("bookId") Integer bookId,
-            Model model) {
-    	
-    	booksService.deleteBook(bookId);
-    	
-        logger.info("Welcome delete! The client locale is {}.", locale);
-        
-        model.addAttribute("bookList", booksService.getBookList());
+	@Autowired
+	private BooksService booksService;
 
-        return "home";
+	@Autowired
+	private RentService rentService;
 
-    }
+	/**
+	 * 対象書籍を削除する
+	 *
+	 * @param locale ロケール情報
+	 * @param bookId 書籍ID
+	 * @param model  モデル情報
+	 * @return 遷移先画面名
+	 */
+	@Transactional
+	@RequestMapping(value = "/deleteBook", method = RequestMethod.POST)
+	public String deleteBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
+
+		logger.info("Welcome delete! The client locale is {}.", locale);
+
+		// 書籍IDに紐ずく書籍が貸出しされているかどうか
+		RentBookInfo selectedRentInfo = rentService.getRentBookInfo(bookId);
+
+		if (selectedRentInfo == null) {
+			booksService.deleteBook(bookId);
+
+			return "redirect:/home";
+		} else {
+			model.addAttribute("errorMessage", "貸出し中です。");
+
+			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+
+			return "details";
+		}
+
+	}
 
 }
