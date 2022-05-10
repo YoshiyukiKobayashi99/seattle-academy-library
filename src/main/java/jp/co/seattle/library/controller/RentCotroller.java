@@ -30,7 +30,7 @@ public class RentCotroller {
 	private BooksService booksService;
 
 	/**
-	 * 詳細画面に遷移する
+	 * 貸出し登録
 	 * 
 	 * @param locale
 	 * @param bookId
