@@ -43,21 +43,18 @@ public class RentCotroller {
 		// デバッグ用ログ
 		logger.info("Welcome rentControler.java! The client locale is {}.", locale);
 
+		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+
 		// 書籍IDに紐ずく書籍が貸出しされているかどうか
 		RentBookInfo selectedRentInfo = rentService.getRentBookInfo(bookId);
 
 		if (selectedRentInfo == null) {
 			rentService.rentBook(bookId);
 
-			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-
-			return "details";
 		} else {
 			model.addAttribute("errorMessage", "貸出し済みです。");
 
-			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-
-			return "details";
 		}
+		return "details";
 	}
 }
