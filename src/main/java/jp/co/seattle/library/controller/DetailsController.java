@@ -19,28 +19,37 @@ import jp.co.seattle.library.service.BooksService;
  */
 @Controller
 public class DetailsController {
-    final static Logger logger = LoggerFactory.getLogger(DetailsController.class);
+	final static Logger logger = LoggerFactory.getLogger(DetailsController.class);
 
-    @Autowired
-    private BooksService bookdService;
+	@Autowired
+	private BooksService booksService;
 
-    /**
-     * 詳細画面に遷移する
-     * @param locale
-     * @param bookId
-     * @param model
-     * @return
-     */
-    @Transactional
-    @RequestMapping(value = "/details", method = RequestMethod.POST)
-    public String detailsBook(Locale locale,
-            @RequestParam("bookId") Integer bookId,
-            Model model) {
-        // デバッグ用ログ
-        logger.info("Welcome detailsControler.java! The client locale is {}.", locale);
+	/**
+	 * 詳細画面に遷移する
+	 * 
+	 * @param locale
+	 * @param bookId
+	 * @param model
+	 * @return
+	 */
+	@Transactional
+	@RequestMapping(value = "/details", method = RequestMethod.POST)
+	public String detailsBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
+		// デバッグ用ログ
+		logger.info("Welcome detailsControler.java! The client locale is {}.", locale);
 
-        model.addAttribute("bookDetailsInfo", bookdService.getBookInfo(bookId));
+		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 
-        return "details";
-    }
+		// 書籍テーブルと貸出テーブルを結合しデータがあるかどうか
+		String status = booksService.bookStatus(bookId);
+
+		if (status == null) {
+			model.addAttribute("bookStatus", "貸し出し可");
+
+		} else {
+			model.addAttribute("bookStatus", "貸し出し中");
+
+		}
+		return "details";
+	}
 }
