@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import lombok.Data;
 
 /**
- * 書籍基本情報格納DTO
+ * 貸出し書籍情報格納DTO
  */
 @Configuration
 @Data
