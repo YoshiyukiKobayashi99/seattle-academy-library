@@ -51,4 +51,18 @@ public class RentService {
 			return null;
 		}
 	}
+
+	/**
+	 * 書籍IDに紐づく貸出している書籍を返却する
+	 *
+	 * @param bookId 書籍ID
+	 */
+	public void returnBook(int bookId) {
+
+		// JSPに渡すデータを設定する
+		String sql = "DELETE FROM rent WHERE book_id = " + bookId;
+
+		jdbcTemplate.update(sql);
+	}
+
 }
