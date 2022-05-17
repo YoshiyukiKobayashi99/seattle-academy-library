@@ -53,8 +53,13 @@ public class RentCotroller {
 
 		} else {
 			model.addAttribute("errorMessage", "貸出し済みです。");
-
+			
 		}
+		// 更新後書籍テーブルと貸出テーブルを結合しデータがあるかどうか
+		String status = booksService.bookStatus(bookId);
+
+		model.addAttribute("bookStatus", status);
+
 		return "details";
 	}
 }

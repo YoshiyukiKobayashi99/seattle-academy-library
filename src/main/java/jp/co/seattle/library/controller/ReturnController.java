@@ -30,7 +30,7 @@ public class ReturnController {
 	private BooksService booksService;
 
 	/**
-	 * 詳細画面に遷移する
+	 * 書籍返却処理
 	 * 
 	 * @param locale
 	 * @param bookId
@@ -49,13 +49,16 @@ public class ReturnController {
 		RentBookInfo selectedRentInfo = rentService.getRentBookInfo(bookId);
 
 		if (selectedRentInfo != null) {
-
 			rentService.returnBook(bookId);
 
 		} else {
 			model.addAttribute("errorMessage", "貸出しされていません。");
-
 		}
+		// 更新後書籍テーブルと貸出テーブルを結合しデータがあるかどうか
+		String status = booksService.bookStatus(bookId);
+
+		model.addAttribute("bookStatus", status);
+
 		return "details";
 	}
 }

@@ -136,4 +136,21 @@ public class BooksService {
 
 		jdbcTemplate.update(sql);
 	}
+
+	/**
+	 * 書籍が貸出しテーブルにあるかどうか
+	 * 
+	 * @param bookId 書籍ID
+	 * @return 書籍ステータス（貸出し状態）
+	 */
+
+	public String bookStatus(int bookId) {
+		String sql = "SELECT CASE WHEN books.id = rent.book_id THEN '貸し出し中' ELSE '貸し出し可' end FROM books LEFT OUTER JOIN rent ON books.id = rent.book_id WHERE books.id ="
+				+ bookId;
+
+		String bookStatus = jdbcTemplate.queryForObject(sql, String.class);
+
+		return bookStatus;
+
+	}
 }
