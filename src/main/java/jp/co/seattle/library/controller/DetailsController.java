@@ -43,13 +43,8 @@ public class DetailsController {
 		// 書籍テーブルと貸出テーブルを結合しデータがあるかどうか
 		String status = booksService.bookStatus(bookId);
 
-		if (status == null) {
-			model.addAttribute("bookStatus", "貸し出し可");
+		model.addAttribute("bookStatus", status);
 
-		} else {
-			model.addAttribute("bookStatus", "貸し出し中");
-
-		}
 		return "details";
 	}
 }
