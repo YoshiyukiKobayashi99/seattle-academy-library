@@ -53,9 +53,7 @@ public class ReturnController {
 
 		} else {
 			model.addAttribute("errorMessage", "貸出しされていません。");
-
 		}
-
 		// 更新後書籍テーブルと貸出テーブルを結合しデータがあるかどうか
 		String status = booksService.bookStatus(bookId);
 
@@ -64,6 +62,7 @@ public class ReturnController {
 
 		} else {
 			model.addAttribute("bookStatus", "貸し出し中");
+
 		}
 		return "details";
 	}
