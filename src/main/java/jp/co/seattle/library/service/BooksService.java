@@ -38,6 +38,23 @@ public class BooksService {
 
 		return getedBookList;
 	}
+	
+	/**
+	 * 検索ワードに引っかかる書籍リストを取得する
+	 *
+	 * @param  検索単語
+	 * @return 書籍リスト
+	 */
+	public List<BookInfo> getBookList(String searhWord) {
+		
+		List<BookInfo> getedBookList = jdbcTemplate.query(
+				// タイトル順に
+				"select id, title, author, publisher, publish_date, thumbnail_url from books WHERE title LIKE '%" + searhWord + "%' ORDER BY title",
+				new BookInfoRowMapper());
+
+		return getedBookList;
+	}
+	
 
 	/**
 	 * 書籍IDに紐づく書籍詳細情報を取得する
