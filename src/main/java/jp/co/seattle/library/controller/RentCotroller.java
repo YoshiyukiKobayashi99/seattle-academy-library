@@ -30,7 +30,7 @@ public class RentCotroller {
 	private BooksService booksService;
 
 	/**
-	 * 書籍貸出し処理
+	 * 貸出し登録
 	 * 
 	 * @param locale
 	 * @param bookId
@@ -53,19 +53,13 @@ public class RentCotroller {
 
 		} else {
 			model.addAttribute("errorMessage", "貸出し済みです。");
-
+			
 		}
-
 		// 更新後書籍テーブルと貸出テーブルを結合しデータがあるかどうか
 		String status = booksService.bookStatus(bookId);
 
-		if (status == null) {
-			model.addAttribute("bookStatus", "貸し出し可");
+		model.addAttribute("bookStatus", status);
 
-		} else {
-			model.addAttribute("bookStatus", "貸し出し中");
-
-		}
 		return "details";
 	}
 }

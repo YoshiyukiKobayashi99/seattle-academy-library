@@ -32,6 +32,12 @@ public class BulkRegistController {
 	@Autowired
 	private BooksService booksService;
 
+	/**
+	 * 一括登録画面に遷移する
+	 * 
+	 * @param model
+	 * @return 遷移先画面名
+	 */
 	@Transactional
 	@RequestMapping(value = "/bulkRegist", method = RequestMethod.GET) // value＝actionで指定したパラメータ
 	// RequestParamでname属性を取得
@@ -39,6 +45,14 @@ public class BulkRegistController {
 		return "bulk";
 	}
 
+	/**
+	 * 一括登録する
+	 * 
+	 * @param model
+	 * @param locale ロケール情報
+	 * @param file   CSVファイル
+	 * @return 遷移先画面名
+	 */
 	@Transactional
 	@RequestMapping(value = "/bulkRegistBook", method = RequestMethod.POST) // value＝actionで指定したパラメータ
 	// RequestParamでname属性を取得
@@ -62,26 +76,27 @@ public class BulkRegistController {
 				// インクリメントで行数把握
 				count++;
 
-				final String[] split = line.split(",", -1);
-				BookDetailsInfo bookInfo = new BookDetailsInfo();
-				bookInfo.setTitle(split[0]);
-				bookInfo.setAuthor(split[1]);
-				bookInfo.setPublisher(split[2]);
-				bookInfo.setPublishDate(split[3]);
-				bookInfo.setIsbn(split[4]);
+				String[] split = line.split(",", -1);
 
-				boolean mustItems = bookInfo.getTitle().isEmpty() || bookInfo.getAuthor().isEmpty()
-						|| bookInfo.getPublisher().isEmpty() || bookInfo.getPublishDate().isEmpty();
+				boolean mustItems = split[0].isEmpty() || split[1].isEmpty() || split[2].isEmpty()
+						|| split[3].isEmpty();
 
-				boolean dateCheck = !(bookInfo.getPublishDate().matches("^[0-9]{8}$"));
+				boolean dateCheck = !(split[3].matches("^[0-9]{8}$"));
 
-				boolean isbnCheck = !bookInfo.getIsbn().isEmpty() && !bookInfo.getIsbn().matches("^[0-9]{10}$") && !bookInfo.getIsbn().matches("^[0-9]{13}$");
+				boolean isbnCheck = !split[4].isEmpty() && !split[4].matches("^[0-9]{10}$")
+						&& !split[4].matches("^[0-9]{13}$");
 
 				if (mustItems || dateCheck || isbnCheck) {
 					// エラーが起きた行数をエラーレコードに格納
 					failedRecord.add(count);
 				} else {
-					// エラーがない場合はbookListに格納
+					// エラーがない場合はBookInfoをbookListに格納
+					BookDetailsInfo bookInfo = new BookDetailsInfo();
+					bookInfo.setTitle(split[0]);
+					bookInfo.setAuthor(split[1]);
+					bookInfo.setPublisher(split[2]);
+					bookInfo.setPublishDate(split[3]);
+					bookInfo.setIsbn(split[4]);
 					bookList.add(bookInfo);
 				}
 
