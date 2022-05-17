@@ -32,8 +32,7 @@
             </div>
             <div>
                 <form method="post" action="search">
-                    <input type="search" class=search1 name="search" placeholder="キーワードを入力してください"> 
-                    <input type="radio" name="searchtype" value="match" checked="checked">一部一致 <input type="radio" name="searchtype" value="fullmatch">完全一致
+                    <input type="search" class=search1 name="search" placeholder="キーワードを入力してください"> <input type="radio" name="searchtype" value="match" checked="checked">一部一致 <input type="radio" name="searchtype" value="fullmatch">完全一致
                     <button type="submit" class="btn_search" name="submit">検索</button>
                 </form>
             </div>
@@ -44,6 +43,9 @@
             </c:if>
             <div>
                 <div class="booklist">
+                    <c:if test="${empty bookList}">
+                        <h2>一致する書籍が見つかりません。</h2>
+                    </c:if>
                     <c:forEach var="bookInfo" items="${bookList}">
                         <div class="books">
                             <form method="post" class="book_thumnail" action="<%=request.getContextPath()%>/details">
