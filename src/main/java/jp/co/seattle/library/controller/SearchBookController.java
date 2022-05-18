@@ -35,12 +35,12 @@ public class SearchBookController {
 	@Transactional
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String transitionHome(Locale locale, @RequestParam("search") String searchWord,
-			@RequestParam("searchtype") String searchType, Model model) {
+			@RequestParam("searchtype") int searchType, Model model) {
 
 		logger.info("Welcome search.java! The client locale is {}.", locale);
 
 		// 一部一致かどうか
-		if (searchType.equals("match")) {
+		if (searchType ==  0) {
 
 			model.addAttribute("bookList", booksService.getBookList(searchWord));
 
@@ -48,6 +48,7 @@ public class SearchBookController {
 
 			model.addAttribute("bookList", booksService.getFullMatchBookList(searchWord));
 		}
+		
 		return "home";
 	}
 }
