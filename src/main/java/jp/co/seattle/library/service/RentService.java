@@ -1,5 +1,7 @@
 package jp.co.seattle.library.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +23,14 @@ public class RentService {
 	private JdbcTemplate jdbcTemplate;
 
 	/**
-	 * 貸出する書籍を登録する
+	 * 貸出する書籍が新規の場合登録し、すでにある場合は更新する
 	 *
 	 * @param bookId 書籍ID
 	 */
 	public void rentBook(int bookId) {
 
 		// JSPに渡すデータを設定する
-		String sql = "INSERT INTO rent (book_id) VALUES (" + bookId + ")";
-
+		String sql = "INSERT INTO rent (book_id, rent_date, return_date) VALUES (" + bookId+ ", now(), null) ON CONFLICT (book_id) DO UPDATE SET rent_date  = now(), return_date  = null";
 		jdbcTemplate.update(sql);
 	}
 
@@ -39,13 +40,13 @@ public class RentService {
 	 * @param bookId 書籍ID
 	 * @return 書籍情報
 	 */
-	public RentBookInfo getRentBookInfo(int bookId) {
+	public String getRentBookInfo(int bookId) {
 
 		// JSPに渡すデータを設定する
-		String sql = "SELECT * FROM rent where book_id =" + bookId;
+		String sql = "SELECT rent_date FROM rent where book_id =" + bookId;
 
 		try {
-			RentBookInfo selectedRentInfo = jdbcTemplate.queryForObject(sql, new RentBookInfoRowMapper());
+			String selectedRentInfo = jdbcTemplate.queryForObject(sql, String.class);
 			return selectedRentInfo;
 		} catch (Exception e) {
 			return null;
@@ -60,9 +61,23 @@ public class RentService {
 	public void returnBook(int bookId) {
 
 		// JSPに渡すデータを設定する
-		String sql = "DELETE FROM rent WHERE book_id = " + bookId;
+		String sql = "UPDATE rent SET rent_date = null, return_date = now() WHERE book_id = " + bookId;
 
 		jdbcTemplate.update(sql);
 	}
 
+	/**
+	 * 貸出し書籍リストを取得する
+	 *
+	 * @return 貸出し書籍リスト
+	 */
+	public List<RentBookInfo> getRentBookList() {
+
+		List<RentBookInfo> getedRentBookList = jdbcTemplate.query(
+
+				"SELECT rent.id, rent.book_id, books.title, rent.rent_date, rent.return_date FROM rent LEFT OUTER JOIN books ON rent.book_id = books.id",
+				new RentBookInfoRowMapper());
+
+		return getedRentBookList;
+	}
 }

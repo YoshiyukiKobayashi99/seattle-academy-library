@@ -166,7 +166,7 @@ public class BooksService {
 
 	public void deleteBook(int bookId) {
 
-		String sql = "DELETE FROM books WHERE id = '" + bookId + "'";
+		String sql = "DELETE FROM books WHERE books.id=" + bookId;
 
 		jdbcTemplate.update(sql);
 	}
@@ -179,7 +179,7 @@ public class BooksService {
 	 */
 
 	public String bookStatus(int bookId) {
-		String sql = "SELECT CASE WHEN books.id = rent.book_id THEN '貸し出し中' ELSE '貸し出し可' end FROM books LEFT OUTER JOIN rent ON books.id = rent.book_id WHERE books.id ="
+		String sql = "SELECT CASE WHEN rent.rent_date IS NOT NULL THEN '貸し出し中' ELSE '貸し出し可' end FROM books LEFT OUTER JOIN rent ON books.id = rent.book_id WHERE books.id ="
 				+ bookId;
 
 		String bookStatus = jdbcTemplate.queryForObject(sql, String.class);
