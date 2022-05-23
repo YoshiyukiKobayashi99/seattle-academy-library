@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jp.co.seattle.library.dto.RentBookInfo;
 import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.RentService;
 
@@ -44,7 +43,7 @@ public class DeleteBookController {
 		logger.info("Welcome delete! The client locale is {}.", locale);
 
 		// 書籍IDに紐ずく書籍が貸出しされているかどうか
-		RentBookInfo selectedRentInfo = rentService.getRentBookInfo(bookId);
+		String selectedRentInfo = rentService.getRentBookInfo(bookId);
 
 		if (selectedRentInfo == null) {
 			booksService.deleteBook(bookId);
@@ -57,7 +56,5 @@ public class DeleteBookController {
 
 			return "details";
 		}
-
 	}
-
 }

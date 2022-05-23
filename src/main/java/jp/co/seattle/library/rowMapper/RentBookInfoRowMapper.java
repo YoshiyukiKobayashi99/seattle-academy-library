@@ -17,6 +17,9 @@ public class RentBookInfoRowMapper implements RowMapper<RentBookInfo> {
 		RentBookInfo rentInfo = new RentBookInfo();
 		rentInfo.setRentId(rs.getInt("id"));
 		rentInfo.setBookId(rs.getInt("book_id"));
+		rentInfo.setTitle(rs.getString("title"));
+		rentInfo.setRentDate(rs.getString("rent_date"));
+		rentInfo.setReturnDate(rs.getString("return_date"));
 		return rentInfo;
 	}
 }
