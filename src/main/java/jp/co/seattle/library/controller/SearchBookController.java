@@ -30,16 +30,25 @@ public class SearchBookController {
 	 * @param locale ロケール情報
 	 * @param model  モデル
 	 * @param search 検索キーワード
-	 * @return       画面遷移先
+	 * @return 画面遷移先
 	 */
 	@Transactional
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String transitionHome(Locale locale, @RequestParam("search") String searchWord, Model model) {
+	public String transitionHome(Locale locale, @RequestParam("search") String searchWord,
+			@RequestParam("searchtype") int searchType, Model model) {
 
 		logger.info("Welcome search.java! The client locale is {}.", locale);
 
-		model.addAttribute("bookList", booksService.getBookList(searchWord));
+		// 一部一致かどうか
+		if (searchType ==  0) {
 
+			model.addAttribute("bookList", booksService.getBookList(searchWord));
+
+		} else {
+
+			model.addAttribute("bookList", booksService.getFullMatchBookList(searchWord));
+		}
+		
 		return "home";
 	}
 }

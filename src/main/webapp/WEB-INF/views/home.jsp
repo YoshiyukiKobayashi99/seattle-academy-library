@@ -30,10 +30,12 @@
             <div>
                 <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a> <a href="<%=request.getContextPath()%>/bulkRegist" class="btn_bulk_book">一括登録</a>
             </div>
-            <form method="post" action="search">
-                <input type="search" class=search1 name="search" placeholder="キーワードを入力してください">
-                <button type="submit" class="btn_search" name="submit">検索</button>
-            </form>
+            <div>
+                <form method="post" action="search">
+                    <input type="search" class=search1 name="search" placeholder="キーワードを入力してください" autofocus> <input type="radio" name="searchtype" value="0" checked="checked">一部一致 <input type="radio" name="searchtype" value="1">完全一致
+                    <button type="submit" class="btn_search" name="submit">検索</button>
+                </form>
+            </div>
         </div>
         <div class="content_body">
             <c:if test="${!empty resultMessage}">
@@ -41,6 +43,9 @@
             </c:if>
             <div>
                 <div class="booklist">
+                    <c:if test="${empty bookList}">
+                        <h2>一致する書籍が見つかりません。</h2>
+                    </c:if>
                     <c:forEach var="bookInfo" items="${bookList}">
                         <div class="books">
                             <form method="post" class="book_thumnail" action="<%=request.getContextPath()%>/details">
