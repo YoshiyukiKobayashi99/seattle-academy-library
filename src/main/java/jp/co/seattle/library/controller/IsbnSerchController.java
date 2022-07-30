@@ -55,7 +55,8 @@ public class IsbnSerchController {
 		logger.info("Welcome isbnSerchController.java! The client locale is {}.", locale);
 
         //URL url = new URL("https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn + "&key=AIzaSyD3OY8uG91yjAhbtStHJ6buciVFB1OHtiA");
-        
+        isbn = isbn.replace("-", "");
+		
         String result = "";
         JsonNode root = null;
         try {
@@ -80,14 +81,16 @@ public class IsbnSerchController {
         JsonNode book = root.get("items");
         System.out.println(book);
 //        System.out.println("koreha  " + book);
-//        System.out.println("iikanji  " + book.get(0).get("volumeInfo"));
-        String title =  book.get(0).get("volumeInfo").get("title").asText();
+        System.out.println("iikanji  " + book.get(0).get("volumeInfo"));
+        System.out.println("samuneoru  "  + book.get(0).get("volumeInfo").get("imageLinks"));
+        
+        String title =  sqlCheck("title", book);
         String beforeAuthors =  book.get(0).get("volumeInfo").get("authors").get(0).asText();
         String authors = beforeAuthors.replace("'", " ").replace(",", " ");
-        String beforePublisher =  book.get(0).get("volumeInfo").get("publisher").asText();
-        String publisher = beforePublisher.replace("'", " ").replace(",", " ");
-        String beforePublishedDate =  book.get(0).get("volumeInfo").get("publishedDate").asText();
-        String publishedDate = beforePublishedDate.replace("-", "");
+        String publisher =  sqlCheck("publisher", book);
+        String publishedDate = sqlCheck("publishedDate", book);
+        String thumbnailUrl = book.get(0).get("volumeInfo").get("imageLinks").get("thumbnail").asText();
+        System.out.println(thumbnailUrl);
 //        System.out.println(title);
 //        System.out.println(authors);
 //        System.out.println(publisher);
@@ -100,6 +103,7 @@ public class IsbnSerchController {
 		//bookInfo.setDescription(description);
 		bookInfo.setIsbn(isbn);
 		bookInfo.setPublishDate(publishedDate);
+		bookInfo.setThumbnailUrl(thumbnailUrl);
         booksService.registBook(bookInfo);
 
 		model.addAttribute("bookDetailsInfo", booksService.getBookInfo());
@@ -108,6 +112,18 @@ public class IsbnSerchController {
 
 		return "details";
 
+	}
+	
+	public String sqlCheck(String item, JsonNode book) {
+		String result = "";
+		
+		try {
+			result  =  book.get(0).get("volumeInfo").get(item).asText();
+			result = result.replace("'", " ").replace(",", " ").replace("-", "");;
+		}
+		catch (NullPointerException ex){
+		}
+		return result;
 	}
 	
 }
