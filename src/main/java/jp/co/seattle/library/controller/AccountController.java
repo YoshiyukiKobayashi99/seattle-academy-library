@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.seattle.library.dto.UserInfo;
-import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.UsersService;
 
 /**
@@ -23,8 +22,6 @@ import jp.co.seattle.library.service.UsersService;
 public class AccountController {
     final static Logger logger = LoggerFactory.getLogger(AccountController.class);
 
-    @Autowired
-    private BooksService booksService;
     @Autowired
     private UsersService usersService;
 
